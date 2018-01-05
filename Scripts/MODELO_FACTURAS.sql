@@ -1,0 +1,26 @@
+USE ODS;
+DROP TABLE IF EXISTS `ODS_HC_FACTURAS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ODS_HC_FACTURAS` (
+  `ID_FACTURA` int(10) unsigned NOT NULL,
+  `ID_CLIENTE` int(11) DEFAULT NULL,
+  `FC_INICIO` datetime DEFAULT NULL,
+  `FC_FIN` datetime DEFAULT NULL,
+  `FC_ESTADO` datetime DEFAULT NULL,
+  `FC_PAGO` datetime DEFAULT NULL,
+  `ID_CICLO_FACTURACION` int(10) unsigned DEFAULT NULL,
+  `ID_METODO_PAGO` int(10) unsigned DEFAULT NULL,
+  `CANTIDAD` int(11) DEFAULT NULL,
+  `FC_INSERT` datetime DEFAULT NULL,
+  `FC_MODIFICACION` datetime DEFAULT NULL,
+  PRIMARY KEY (`ID_FACTURA`),
+  KEY `fk_fact_cli_idx` (`ID_CLIENTE`),
+  KEY `fk_fact_cic_idx` (`ID_CICLO_FACTURACION`),
+  KEY `fk_fact_pag_idx` (`ID_METODO_PAGO`),
+  CONSTRAINT `fk_fact_cic` FOREIGN KEY (`ID_CICLO_FACTURACION`) REFERENCES `ODS_DM_CICLOS_FACTURACION` (`ID_CICLO_FACTURACION`),
+  CONSTRAINT `fk_fact_cli` FOREIGN KEY (`ID_CLIENTE`) REFERENCES `ODS_HC_CLIENTES` (`ID_CLIENTE`),
+  CONSTRAINT `fk_fact_pag` FOREIGN KEY (`ID_METODO_PAGO`) REFERENCES `ODS_DM_METODOS_PAGO` (`ID_METODO_PAGO`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+COMMIT;
